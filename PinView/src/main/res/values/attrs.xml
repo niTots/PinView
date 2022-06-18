@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="pinViewStyle" format="reference" />
+    <attr name="pinSetViewStyle" format="reference" />
+    <attr name="pinSetErrorLabelStyle" format="reference" />
+
+    <declare-styleable name="PinView">
+        <attr name="pin_drawingStyle" format="enum">
+            <enum name="square" value="1" />
+            <enum name="rounded" value="2" />
+            <enum name="circle" value="3" />
+        </attr>
+        <attr name="pin_size" format="enum">
+            <enum name="large" value="1" />
+            <enum name="medium" value="2" />
+            <enum name="small" value="3" />
+        </attr>
+        <attr name="pin_animationStyle" format="enum">
+            <enum name="common" value="1" />
+            <enum name="bouncing" value="2" />
+            <enum name="coloring" value="3" />
+        </attr>
+        <attr name="pin_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="PinSetView">
+        <attr name="pinSet_pinCount" format="integer" />
+        <attr name="pinSet_horizontalMargin" format="dimension" />
+        <attr name="pinSet_size" format="enum">
+            <enum name="large" value="1" />
+            <enum name="medium" value="2" />
+            <enum name="small" value="3" />
+        </attr>
+        <attr name="pinSet_errorTextAppearance" format="reference" />
+        <attr name="pinSet_errorStyleRef" format="reference" />
+        <attr name="pinSet_isLabelShown" format="boolean" />
+        <attr name="pinSet_errorLabelPosition" format="enum">
+            <enum name="above" value="1" />
+            <enum name="below" value="2" />
+        </attr>
+        <attr name="pinSet_errorLabelMargin" format="dimension" />
+        <attr name="pinSet_animationDuration" format="integer" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PinViewProject</string>
+    <string name="pinSet_errorLabel_text">Incorrect PIN</string>
+</resources>

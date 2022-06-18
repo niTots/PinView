@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.SampleApp.PinView" parent="Widget.NiTots.PinView">
+        <item name="pin_color">?attr/colorPrimary</item>
+    </style>
+</resources>
