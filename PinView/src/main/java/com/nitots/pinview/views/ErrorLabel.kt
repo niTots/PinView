@@ -14,8 +14,6 @@ internal class ErrorLabel(context: Context, attrs: AttributeSet? = null) :
         configure()
     }
 
-    var animationDuration: Long = 1000
-
     private fun configure() {
         visibility = INVISIBLE
     }

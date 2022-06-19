@@ -14,7 +14,7 @@ import com.nitots.pinview.helpers.PinSetViewHelper
 
 private val DEF_STYLE_ATTR = R.attr.pinSetViewStyle
 
-class PinSetView(context: Context, attrs: AttributeSet) :
+class PinSetView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     LinearLayout(context, attrs, DEF_STYLE_ATTR, 0), PinView.PinEnterListener {
 
     private var currentIndex = 0
@@ -81,7 +81,7 @@ class PinSetView(context: Context, attrs: AttributeSet) :
         }
     }
 
-    private fun initUI(context: Context, attrs: AttributeSet) {
+    private fun initUI(context: Context, attrs: AttributeSet?) {
         initPinSetViewHelper(context, attrs)
         with(viewHelper) {
             addPins(this@PinSetView, context)
@@ -90,18 +90,10 @@ class PinSetView(context: Context, attrs: AttributeSet) :
         initPins()
     }
 
-    private fun initPinSetViewHelper(context: Context, attrs: AttributeSet) {
+    private fun initPinSetViewHelper(context: Context, attrs: AttributeSet?) {
         context.obtainStyledAttributes(attrs, R.styleable.PinSetView, DEF_STYLE_ATTR, 0)
             .use { pinSetViewTypedArray ->
-                val errorLabelStyle =
-                    pinSetViewTypedArray.getResourceId(
-                        R.styleable.PinSetView_pinSet_errorStyleRef,
-                        -1
-                    )
-                context.obtainStyledAttributes(errorLabelStyle, R.styleable.PinSetView)
-                    .use { errorTypedArray ->
-                        viewHelper = PinSetViewHelper(pinSetViewTypedArray, errorTypedArray)
-                    }
+                viewHelper = PinSetViewHelper(pinSetViewTypedArray)
             }
     }
 

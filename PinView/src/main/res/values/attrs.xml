@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <attr name="pinViewStyle" format="reference" />
     <attr name="pinSetViewStyle" format="reference" />
+    <attr name="pinViewStyle" format="reference" />
     <attr name="pinSetErrorLabelStyle" format="reference" />
 
     <declare-styleable name="PinView">
@@ -22,6 +22,7 @@
             <enum name="coloring" value="3" />
         </attr>
         <attr name="pin_color" format="color" />
+        <attr name="pin_animationDuration" format="integer" />
     </declare-styleable>
 
     <declare-styleable name="PinSetView">
@@ -32,14 +33,11 @@
             <enum name="medium" value="2" />
             <enum name="small" value="3" />
         </attr>
-        <attr name="pinSet_errorTextAppearance" format="reference" />
-        <attr name="pinSet_errorStyleRef" format="reference" />
         <attr name="pinSet_isLabelShown" format="boolean" />
-        <attr name="pinSet_errorLabelPosition" format="enum">
+        <attr name="pinSet_labelPosition" format="enum">
             <enum name="above" value="1" />
             <enum name="below" value="2" />
         </attr>
-        <attr name="pinSet_errorLabelMargin" format="dimension" />
-        <attr name="pinSet_animationDuration" format="integer" />
+        <attr name="pinSet_labelMargin" format="dimension" />
     </declare-styleable>
 </resources>

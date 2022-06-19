@@ -22,8 +22,6 @@ private val DEF_STYLE_ATTRS = R.attr.pinViewStyle
 class PinView(context: Context, attrs: AttributeSet? = null) :
     MaterialCardView(context, attrs, DEF_STYLE_ATTRS) {
 
-    var animationDuration: Long = 1000L
-
     private var pinEnterListener: PinEnterListener? = null
 
     private lateinit var viewHelper: PinViewHelper

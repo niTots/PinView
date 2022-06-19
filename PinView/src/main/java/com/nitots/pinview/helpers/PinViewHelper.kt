@@ -25,12 +25,8 @@ internal class PinViewHelper(
     private val strokeErrorColor: Int
     private val pinCommonColor: Int
     private val pinErrorColor: Int
-
-    private val palette: ColorPalette
-
-
     private val animationDuration: Long
-        get() = pinView.animationDuration
+    private val palette: ColorPalette
 
     init {
         pinSize = getPinSize(pinTypedArray)
@@ -40,6 +36,7 @@ internal class PinViewHelper(
         strokeErrorColor = getStrokeErrorColor()
         pinCommonColor = getPinCommonColor(pinTypedArray)
         pinErrorColor = strokeErrorColor
+        animationDuration = getAnimationDuration(pinTypedArray)
         palette = ColorPalette(
             strokeCommonColor,
             strokeErrorColor,
@@ -116,9 +113,12 @@ internal class PinViewHelper(
         return typed.data
     }
 
-
     private fun getPinCommonColor(pinTypedArray: TypedArray): Int {
         return pinTypedArray.getColor(R.styleable.PinView_pin_color, Color.BLACK)
+    }
+
+    private fun getAnimationDuration(pinTypedArray: TypedArray): Long {
+        return pinTypedArray.getInt(R.styleable.PinView_pin_animationDuration, 1000).toLong()
     }
 
     private enum class Size(val attrValue: Int, val partsCount: Int) {

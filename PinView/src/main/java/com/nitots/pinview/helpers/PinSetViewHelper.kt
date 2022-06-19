@@ -11,20 +11,19 @@ import com.nitots.pinview.views.PinSetView
 import com.nitots.pinview.views.PinView
 import kotlin.math.max
 
-internal class PinSetViewHelper(pinSetViewTypedArray: TypedArray, errorTypedArray: TypedArray) {
+internal class PinSetViewHelper(pinSetViewTypedArray: TypedArray) {
     private val errorLabelExists: Boolean
     private val errorLabelPosition: ErrorLabelPosition
     private val pinCount: Int
     private val sizeStyle: SizeStyle
     private val pinHorizontalMargin: Int
     private val errorLabelMargin: Int
-    private val animationDuration: Long
 
 
     init {
         errorLabelExists =
-            errorTypedArray.getBoolean(R.styleable.PinSetView_pinSet_isLabelShown, true)
-        errorLabelPosition = getErrorLabelPosition(errorTypedArray)
+            pinSetViewTypedArray.getBoolean(R.styleable.PinSetView_pinSet_isLabelShown, true)
+        errorLabelPosition = getErrorLabelPosition(pinSetViewTypedArray)
         pinCount = max(1, pinSetViewTypedArray.getInt(R.styleable.PinSetView_pinSet_pinCount, 4))
         sizeStyle = getSizeStyle(pinSetViewTypedArray)
         pinHorizontalMargin =
@@ -33,23 +32,17 @@ internal class PinSetViewHelper(pinSetViewTypedArray: TypedArray, errorTypedArra
                 0
             )
         errorLabelMargin =
-            errorTypedArray.getDimensionPixelSize(
-                R.styleable.PinSetView_pinSet_errorLabelMargin,
+            pinSetViewTypedArray.getDimensionPixelSize(
+                R.styleable.PinSetView_pinSet_labelMargin,
                 0
             )
-
-        animationDuration =
-            pinSetViewTypedArray.getInt(R.styleable.PinSetView_pinSet_animationDuration, 1000)
-                .toLong()
     }
 
     fun addPins(parent: PinSetView, context: Context) {
         val wrapper = EqualPlaceLinearLayout(context, sizeStyle.multiplier)
         val lp = generateEqualPlaceLinearLayoutLayoutParams()
         for (i in 1..pinCount) {
-            val pin = PinView(context).also {
-                it.animationDuration = animationDuration
-            }
+            val pin = PinView(context)
             val lp = generatePinViewLayoutParams()
             wrapper.addView(pin, lp)
         }
@@ -58,9 +51,7 @@ internal class PinSetViewHelper(pinSetViewTypedArray: TypedArray, errorTypedArra
 
     fun addErrorLabel(parent: PinSetView, context: Context) {
         if (errorLabelExists) {
-            val errorLabel = ErrorLabel(context).also {
-                it.animationDuration = animationDuration
-            }
+            val errorLabel = ErrorLabel(context)
             val lp = generateErrorLabelLayoutParams()
             parent.addView(errorLabel, errorLabelPosition.value, lp)
         }
@@ -102,7 +93,7 @@ internal class PinSetViewHelper(pinSetViewTypedArray: TypedArray, errorTypedArra
         return ErrorLabelPosition.values()
             .find {
                 it.attrValue == errorTypedArray.getInt(
-                    R.styleable.PinSetView_pinSet_errorLabelPosition,
+                    R.styleable.PinSetView_pinSet_labelPosition,
                     -1
                 )
             } ?: ErrorLabelPosition.BELOW
