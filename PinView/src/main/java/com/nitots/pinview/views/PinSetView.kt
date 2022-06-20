@@ -1,6 +1,8 @@
 package com.nitots.pinview.views
 
 import android.content.Context
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.LinearLayout
@@ -36,6 +38,20 @@ class PinSetView @JvmOverloads constructor(context: Context, attrs: AttributeSet
     init {
         configure()
         initUI(context, attrs)
+    }
+
+    override fun onSaveInstanceState(): Parcelable? {
+        val state = SavedState(super.onSaveInstanceState())
+        state.focusIndex = currentIndex
+        return state
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        super.onRestoreInstanceState(state)
+        if (state is SavedState) {
+            currentIndex = state.focusIndex
+        }
+
     }
 
     override fun onValueEntered() {
@@ -112,5 +128,33 @@ class PinSetView @JvmOverloads constructor(context: Context, attrs: AttributeSet
             builder.append(pin.value)
         }
         return builder.toString()
+    }
+
+    private class SavedState : BaseSavedState {
+        var focusIndex: Int = 0
+
+        constructor(superState: Parcelable?) : super(superState)
+
+        constructor(source: Parcel) : super(source) {
+            focusIndex = source.readInt()
+        }
+
+        override fun writeToParcel(out: Parcel, flags: Int) {
+            super.writeToParcel(out, flags)
+            out.writeInt(focusIndex)
+        }
+
+        companion object {
+            @JvmField
+            val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
+                override fun createFromParcel(source: Parcel): SavedState {
+                    return SavedState(source)
+                }
+
+                override fun newArray(size: Int): Array<SavedState> {
+                    return arrayOf()
+                }
+            }
+        }
     }
 }

@@ -3,6 +3,8 @@ package com.nitots.pinview.views
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Canvas
+import android.os.Parcel
+import android.os.Parcelable
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.KeyEvent
@@ -15,7 +17,6 @@ import com.google.android.material.card.MaterialCardView
 import com.nitots.pinview.R
 import com.nitots.pinview.animation.AnimationLauncher
 import com.nitots.pinview.helpers.PinViewHelper
-import kotlin.random.Random
 
 private val DEF_STYLE_ATTRS = R.attr.pinViewStyle
 
@@ -59,6 +60,20 @@ class PinView(context: Context, attrs: AttributeSet? = null) :
         return true
     }
 
+    override fun onSaveInstanceState(): Parcelable? {
+        val state = SavedState(super.onSaveInstanceState())
+        state.pinValue = value
+        return state
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        super.onRestoreInstanceState(state)
+        if (state is SavedState) {
+            value = state.pinValue
+        }
+
+    }
+
 
     fun setPinListener(listener: PinEnterListener) {
         this.pinEnterListener = listener
@@ -78,10 +93,8 @@ class PinView(context: Context, attrs: AttributeSet? = null) :
     }
 
     private fun configure() {
-        id = Random.nextInt()
         isFocusable = true
         isFocusableInTouchMode = true
-
     }
 
     private fun setListeners() {
@@ -170,6 +183,34 @@ class PinView(context: Context, attrs: AttributeSet? = null) :
             return super.deleteSurroundingText(beforeLength, afterLength)
         }
 
+    }
+
+    private class SavedState : BaseSavedState {
+        var pinValue: String = ""
+
+        constructor(superState: Parcelable?) : super(superState)
+
+        constructor(source: Parcel) : super(source) {
+            pinValue = source.readString().orEmpty()
+        }
+
+        override fun writeToParcel(out: Parcel, flags: Int) {
+            super.writeToParcel(out, flags)
+            out.writeString(pinValue)
+        }
+
+        companion object {
+            @JvmField
+            val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
+                override fun createFromParcel(source: Parcel): SavedState {
+                    return SavedState(source)
+                }
+
+                override fun newArray(size: Int): Array<SavedState> {
+                    return arrayOf()
+                }
+            }
+        }
     }
 
     internal companion object {

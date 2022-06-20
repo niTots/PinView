@@ -41,12 +41,16 @@ internal class PinSetViewHelper(pinSetViewTypedArray: TypedArray) {
     fun addPins(parent: PinSetView, context: Context) {
         val wrapper = EqualPlaceLinearLayout(context, sizeStyle.multiplier)
         val lp = generateEqualPlaceLinearLayoutLayoutParams()
-        for (i in 1..pinCount) {
-            val pin = PinView(context)
+        for (childNumber in 0 until pinCount) {
+            val pin = PinView(context).applyConsistentId(childNumber)
             val lp = generatePinViewLayoutParams()
             wrapper.addView(pin, lp)
         }
         parent.addView(wrapper, lp)
+    }
+
+    private fun PinView.applyConsistentId(childNumber: Int) = apply {
+        id = R.id.PinViewId + childNumber
     }
 
     fun addErrorLabel(parent: PinSetView, context: Context) {
