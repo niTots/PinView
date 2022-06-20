@@ -1,4 +1,7 @@
 # PinView
+
+![JitPack](https://img.shields.io/jitpack/v/github/niTots/PinView)
+
 <p align="center">
 <img width="335" alt="Screenshot 2022-06-19 at 16 07 33" src="https://user-images.githubusercontent.com/17580508/174485486-058b2a93-937b-42a2-a3d8-fb3724669dae.png">
 </p>
@@ -7,13 +10,44 @@
 This is the repository of the awesome and highly customizable PinView for the Android Platform.
 
 ## Download
-PinView is available on `mavenCentral()`.
+PinView is available on `jitpack.io`.
+To use it as a dependency, don't forget to:
+1. Declare `jitpack.io` as a repository in your `build.gradle (project level)`;
+
 ```
-//TODO
-implementation("...")
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
+}
+```
+2. Decalre the dependency:
+
+```
+implementation 'com.github.niTots:PinView:1.0.0' 
 ```
 
-## How to style?
+## How to use?
+### Configuring
+First of all, declare this 3 attributes inside your theme with default styles:
+```
+    <item name="pinSetViewStyle">@style/Widget.NiTots.PinSetView</item>
+    <item name="pinViewStyle">@style/Widget.NiTots.PinView</item>
+    <item name="pinSetErrorLabelStyle">@style/Widget.NiTots.PinSetView.ErrorLabel</item>
+```
+
+The only class, required to be used, is `PinSetView`. You can either use it inside your `.xml` files or directly from code.
+</p>
+Don't forget to set the completion listener. It will be called, when the last pin is entered.
+
+```
+pinSetView.setCompletionListener{
+  ...
+}
+```
+In case the pin is incorrect, call `incorrectPinEntered()` function.
+
+### Styling
 The `PinView` provides many styling options. You can:
 - Apply custom amount of pins: The attribute `pinSet_pinCount`;
 - Choose the size of the `PinView` from: `large`, `medium` or `small`. The attribute `pinSet_size`;
@@ -27,26 +61,13 @@ The `PinView` provides many styling options. You can:
 - Choose the animation from: `common`, `bouncing` or `coloring`. The attribute `pin_animationStyle`;
 - Apply custom animation duration. The attribute `pin_animationDuration`.
 
-## How to use?
-### Styling
 All the parameters have the default values, which are declared in the proper style. </p>
-In case you want to customize it (:fire: of course you want to :fire:), you need to do the following:
+In case you want to customize it (:fire: of course you want :fire:), you need to do the following:
 - Create custom style and extend it from one of the build-in from this library;
-- Inside your theme override the specific attribute, based on what you want to customize.
+- Inside the theme, place your style within the proper theme attribute. (Theme attributes are listed in [Configuring](#configuring) section.)
 
-### Configuring
-The only class, required to be used, is `PinSetView`. You can either use it inside your `.xml` files or directly from code.
-</p>
-Don't forget to set the completion listener. It will be called, when the last pin is entered.
 
-```
-pinSetView.setCompletionListener{
-  ...
-}
-```
-In case the pin is incorrect, call `incorrectPinEntered()` function.
-
-### Available themes
+### Available styles
 There are 3 built-in styles:
 - For managing the **PinSetView** properties: `"Widget.NiTots.PinSetView"`;
 - For managing the individual pin view properties: `"Widget.NiTots.PinView"`;
@@ -56,12 +77,6 @@ There are 3 built-in styles:
 Need to notice:
 - The style `"Widget.NiTots.PinView"` extend from `"Widget.MaterialComponents.CardView"`, so any properties, that can be used for the `MaterialCardView` are available insde this style too.
 - The style `"Widget.NiTots.PinSetView.ErrorLabel"` extend from `"Widget.MaterialComponents.TextView"`, so any properties, that can be used for the `TextView` are available insde this style too.
-
-### Available theme attributes
-There are 3 built-in theme attributes:
-- For applying style for the **PinSeetViw**: `pinSetViewStyle`;
-- For applying style for the individual **pin view**: `pinViewStyle`;
-- For appluing style for the **error label**: `pinSetErrorLabelStyle`;
 
 ## License
 ```
