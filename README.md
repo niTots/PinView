@@ -7,10 +7,21 @@
 This is the repository of the awesome and highly customizable PinView for the Android Platform.
 
 ## Download
-PinView is available on `mavenCentral()`.
+PinView is available on `jitpack.io`.
+To use it as a dependency, don't forget to:
+1. Declare `jitpack.io` as a repository in your `build.gradle (project level)`;
+
 ```
-//TODO
-implementation("...")
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
+}
+```
+2. Decalre the dependency:
+
+```
+implementation 'com.github.niTots:PinView:1.0.0' 
 ```
 
 ## How to style?
