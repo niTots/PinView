@@ -40,6 +40,8 @@ class PinView(context: Context, attrs: AttributeSet? = null) :
 
     var value = ""
 
+    private var keyboardKeySender: KeyboardKeySender? = null
+
     /*
     * In order to configure the IME, this method is overridden.
     * Because of the InputType.TYPE_CLASS_NUMBER type, numbers are not handled within InputConnection class.
@@ -111,6 +113,7 @@ class PinView(context: Context, attrs: AttributeSet? = null) :
                     KeyEvent.KEYCODE_7 -> onValueEntered("7")
                     KeyEvent.KEYCODE_8 -> onValueEntered("8")
                     KeyEvent.KEYCODE_9 -> onValueEntered("9")
+                    KeyEvent.KEYCODE_DEL -> onDeletionClicked(KeyboardKeySender.KEY_LISTENER)
                 }
             }
             true
@@ -142,8 +145,13 @@ class PinView(context: Context, attrs: AttributeSet? = null) :
             }
     }
 
-    private fun onDeletionClicked() {
-        pinEnterListener?.onDeletion()
+    private fun onDeletionClicked(sender: KeyboardKeySender) {
+        if (keyboardKeySender == null) {
+            keyboardKeySender = sender
+            pinEnterListener?.onDeletion()
+        } else if (keyboardKeySender == sender) {
+            pinEnterListener?.onDeletion()
+        }
     }
 
     private fun onValueEntered(value: String) {
@@ -179,7 +187,7 @@ class PinView(context: Context, attrs: AttributeSet? = null) :
         BaseInputConnection(targetView, false) {
 
         override fun deleteSurroundingText(beforeLength: Int, afterLength: Int): Boolean {
-            targetView.onDeletionClicked()
+            targetView.onDeletionClicked(KeyboardKeySender.INPUT_CONNECTION)
             return super.deleteSurroundingText(beforeLength, afterLength)
         }
 
@@ -211,6 +219,11 @@ class PinView(context: Context, attrs: AttributeSet? = null) :
                 }
             }
         }
+    }
+
+    private enum class KeyboardKeySender {
+        KEY_LISTENER,
+        INPUT_CONNECTION
     }
 
     internal companion object {
